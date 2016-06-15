@@ -8,13 +8,31 @@
 
 #import "ProgressBar.h"
 
-#define DEFAULT_MAX_POSITION_BAR_COLOR lightGrayColor
+#define DEFAULT_BACKGROUND_BAR_COLOR lightGrayColor
+#define DEFAULT_MAX_POSITION_BAR_COLOR darkGrayColor
 #define DEFAULT_POSITION_BAR_COLOR whiteColor
 
 @implementation ProgressBar
 
+@synthesize backgroundBarColor = _backgroundBarColor;
 @synthesize maxPositionBarColor = _maxPositionBarColor;
 @synthesize positionBarColor = _positionBarColor;
+
+- (void)setBackgroundBarColor:(UIColor *)backgroundBarColor
+{
+    if (![_backgroundBarColor isEqual:backgroundBarColor]) {
+        _backgroundBarColor = backgroundBarColor;
+        [self setNeedsDisplay];
+    }
+}
+
+- (UIColor *)backgroundBarColor
+{
+    if (!_backgroundBarColor) {
+        _backgroundBarColor = [UIColor DEFAULT_BACKGROUND_BAR_COLOR];
+    }
+    return _backgroundBarColor;
+}
 
 - (void)setMaxPositionBarColor:(UIColor *)maxPositionBarColor
 {
@@ -103,6 +121,11 @@
     CGImageRef mask = CGBitmapContextCreateImage(UIGraphicsGetCurrentContext());
     UIGraphicsEndImageContext();
     CGContextClipToMask(context, self.bounds, mask);
+    
+    // draw backgroundBar:
+    
+    CGContextSetFillColorWithColor(context, [self.backgroundBarColor CGColor]);
+    CGContextFillRect(context, self.bounds);
     
     // draw maxPositionBar:
     

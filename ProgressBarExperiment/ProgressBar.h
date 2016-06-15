@@ -10,6 +10,7 @@
 
 @interface ProgressBar : UIControl
 
+@property (nonatomic, strong) UIColor *backgroundBarColor;
 @property (nonatomic, strong) UIColor *maxPositionBarColor;
 @property (nonatomic, strong) UIColor *positionBarColor;
 
