@@ -104,18 +104,26 @@
     UIGraphicsEndImageContext();
     CGContextClipToMask(context, self.bounds, mask);
     
-    // draw bar
-
+    // draw maxPositionBar:
     
-    CGRect progressRect = CGRectMake(self.bounds.origin.x, self.bounds.origin.y, self.bounds.size.width / 2.0, self.bounds.size.height);
-    CGContextSetFillColorWithColor(context, [[UIColor blueColor] CGColor]);
-    CGContextFillRect(context, progressRect);
+    CGRect maxPositionRect = CGRectMake(self.bounds.origin.x,
+                                        self.bounds.origin.y,
+                                        self.bounds.size.width * self.maxPosition,
+                                        self.bounds.size.height);
+    CGContextSetFillColorWithColor(context, [self.maxPositionBarColor CGColor]);
+    CGContextFillRect(context, maxPositionRect);
     
+    // draw positionBar:
+    
+    CGRect positionRect = CGRectMake(self.bounds.origin.x,
+                                     self.bounds.origin.y,
+                                     self.bounds.size.width * self.position,
+                                     self.bounds.size.height);
+    CGContextSetFillColorWithColor(context, [self.positionBarColor CGColor]);
+    CGContextFillRect(context, positionRect);
     
     CGImageRelease(mask);
     CGContextRestoreGState(context);
-    
-    
 }
 
 
