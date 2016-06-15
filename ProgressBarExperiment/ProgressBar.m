@@ -8,9 +8,9 @@
 
 #import "ProgressBar.h"
 
-#define DEFAULT_BACKGROUND_BAR_COLOR lightGrayColor
-#define DEFAULT_MAX_POSITION_BAR_COLOR darkGrayColor
-#define DEFAULT_POSITION_BAR_COLOR whiteColor
+#define DEFAULT_BACKGROUND_BAR_COLOR colorWithWhite:1.0 alpha:0.25
+#define DEFAULT_MAX_POSITION_BAR_COLOR colorWithWhite:1.0 alpha:0.5
+#define DEFAULT_POSITION_BAR_COLOR colorWithWhite:1.0 alpha:1.0
 
 @implementation ProgressBar
 
