@@ -14,6 +14,7 @@
 		BEBB0FAF1D10E7B100F459D9 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = BEBB0FAE1D10E7B100F459D9 /* Assets.xcassets */; };
 		BEBB0FB21D10E7B100F459D9 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = BEBB0FB01D10E7B100F459D9 /* LaunchScreen.storyboard */; };
 		BEBB0FBB1D10E85500F459D9 /* ProgressBar.m in Sources */ = {isa = PBXBuildFile; fileRef = BEBB0FBA1D10E85500F459D9 /* ProgressBar.m */; };
+		BEBB0FBD1D11E45300F459D9 /* Notex.txt in Resources */ = {isa = PBXBuildFile; fileRef = BEBB0FBC1D11E45300F459D9 /* Notex.txt */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -29,6 +30,7 @@
 		BEBB0FB31D10E7B100F459D9 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		BEBB0FB91D10E85500F459D9 /* ProgressBar.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ProgressBar.h; sourceTree = "<group>"; };
 		BEBB0FBA1D10E85500F459D9 /* ProgressBar.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ProgressBar.m; sourceTree = "<group>"; };
+		BEBB0FBC1D11E45300F459D9 /* Notex.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Notex.txt; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -61,6 +63,7 @@
 		BEBB0FA11D10E7B100F459D9 /* ProgressBarExperiment */ = {
 			isa = PBXGroup;
 			children = (
+				BEBB0FBC1D11E45300F459D9 /* Notex.txt */,
 				BEBB0FA51D10E7B100F459D9 /* AppDelegate.h */,
 				BEBB0FA61D10E7B100F459D9 /* AppDelegate.m */,
 				BEBB0FA81D10E7B100F459D9 /* ViewController.h */,
@@ -142,6 +145,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				BEBB0FB21D10E7B100F459D9 /* LaunchScreen.storyboard in Resources */,
+				BEBB0FBD1D11E45300F459D9 /* Notex.txt in Resources */,
 				BEBB0FAF1D10E7B100F459D9 /* Assets.xcassets in Resources */,
 				BEBB0FAD1D10E7B100F459D9 /* Main.storyboard in Resources */,
 			);
