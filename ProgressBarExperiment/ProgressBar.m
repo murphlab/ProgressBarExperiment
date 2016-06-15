@@ -44,9 +44,10 @@
     
     
     //Draw mask
-    CGContextSetLineWidth(newContext, 20.0);
+    CGFloat lineWidth = 20.0;
+    CGFloat linePadX = lineWidth / 2.0;
+    CGContextSetLineWidth(newContext, lineWidth);
     CGFloat middleY = self.bounds.origin.y + self.bounds.size.height / 2.0;
-    static CGFloat linePadX = 20.0;
     CGFloat lineStartX = self.bounds.origin.x + linePadX;
     CGFloat lineEndX = self.bounds.origin.x + self.bounds.size.width - linePadX;
     CGContextMoveToPoint(newContext, lineStartX, middleY);
