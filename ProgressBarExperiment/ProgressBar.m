@@ -8,8 +8,53 @@
 
 #import "ProgressBar.h"
 
+#define DEFAULT_MAX_POSITION_BAR_COLOR lightGrayColor
+#define DEFAULT_POSITION_BAR_COLOR whiteColor
+
 @implementation ProgressBar
 
+@synthesize maxPositionBarColor = _maxPositionBarColor;
+@synthesize positionBarColor = _positionBarColor;
+
+- (void)setMaxPositionBarColor:(UIColor *)maxPositionBarColor
+{
+    if (![_maxPositionBarColor isEqual:maxPositionBarColor]) {
+        _maxPositionBarColor = maxPositionBarColor;
+        [self setNeedsDisplay];
+    }
+}
+
+- (UIColor *)maxPositionBarColor
+{
+    if (!_maxPositionBarColor) {
+        _maxPositionBarColor = [UIColor DEFAULT_MAX_POSITION_BAR_COLOR];
+    }
+    return _maxPositionBarColor;
+}
+
+- (void)setPositionBarColor:(UIColor *)positionBarColor
+{
+    if (![_positionBarColor isEqual:positionBarColor]) {
+        _positionBarColor = positionBarColor;
+        [self setNeedsDisplay];
+    }
+}
+
+- (UIColor *)positionBarColor
+{
+    if (!_positionBarColor) {
+        _positionBarColor = [UIColor DEFAULT_POSITION_BAR_COLOR];
+    }
+    return _positionBarColor;
+}
+
+- (void)setPosition:(CGFloat)position
+{
+    if (_position != position) {
+        _position = position;
+        [self setNeedsDisplay];
+    }
+}
 
 - (void)drawRect:(CGRect)rect {
     /*
