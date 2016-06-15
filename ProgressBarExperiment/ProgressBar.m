@@ -71,4 +71,20 @@
     
     
 }
+
+
+- (BOOL)beginTrackingWithTouch:(UITouch *)touch withEvent:(UIEvent *)event
+{
+    CGPoint locationInView = [touch locationInView:self];
+    NSLog(@"beginTracking: %g %g", locationInView.x, locationInView.y);
+    return YES;
+}
+
+- (BOOL)continueTrackingWithTouch:(UITouch *)touch withEvent:(UIEvent *)event
+{
+    CGPoint locationInView = [touch locationInView:self];
+    NSLog(@"continueTracking: %g %g", locationInView.x, locationInView.y);
+    return YES;
+}
+
 @end
