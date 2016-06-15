@@ -7,8 +7,11 @@
 //
 
 #import "ViewController.h"
+#import "ProgressBar.h"
 
 @interface ViewController ()
+
+@property (weak, nonatomic) IBOutlet ProgressBar *progressBar;
 
 @end
 
@@ -16,7 +19,13 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    // Do any additional setup after loading the view, typically from a nib.
+
+}
+
+- (void)viewDidAppear:(BOOL)animated
+{
+    self.progressBar.maxPosition = 0.66;
+    self.progressBar.position = 0.33;
 }
 
 - (void)didReceiveMemoryWarning {
