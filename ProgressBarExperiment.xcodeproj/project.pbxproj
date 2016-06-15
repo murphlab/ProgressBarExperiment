@@ -13,6 +13,7 @@
 		BEBB0FAD1D10E7B100F459D9 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = BEBB0FAB1D10E7B100F459D9 /* Main.storyboard */; };
 		BEBB0FAF1D10E7B100F459D9 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = BEBB0FAE1D10E7B100F459D9 /* Assets.xcassets */; };
 		BEBB0FB21D10E7B100F459D9 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = BEBB0FB01D10E7B100F459D9 /* LaunchScreen.storyboard */; };
+		BEBB0FBB1D10E85500F459D9 /* ProgressBar.m in Sources */ = {isa = PBXBuildFile; fileRef = BEBB0FBA1D10E85500F459D9 /* ProgressBar.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -26,6 +27,8 @@
 		BEBB0FAE1D10E7B100F459D9 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		BEBB0FB11D10E7B100F459D9 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		BEBB0FB31D10E7B100F459D9 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		BEBB0FB91D10E85500F459D9 /* ProgressBar.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ProgressBar.h; sourceTree = "<group>"; };
+		BEBB0FBA1D10E85500F459D9 /* ProgressBar.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ProgressBar.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -67,6 +70,8 @@
 				BEBB0FB01D10E7B100F459D9 /* LaunchScreen.storyboard */,
 				BEBB0FB31D10E7B100F459D9 /* Info.plist */,
 				BEBB0FA21D10E7B100F459D9 /* Supporting Files */,
+				BEBB0FB91D10E85500F459D9 /* ProgressBar.h */,
+				BEBB0FBA1D10E85500F459D9 /* ProgressBar.m */,
 			);
 			path = ProgressBarExperiment;
 			sourceTree = "<group>";
@@ -151,6 +156,7 @@
 			files = (
 				BEBB0FAA1D10E7B100F459D9 /* ViewController.m in Sources */,
 				BEBB0FA71D10E7B100F459D9 /* AppDelegate.m in Sources */,
+				BEBB0FBB1D10E85500F459D9 /* ProgressBar.m in Sources */,
 				BEBB0FA41D10E7B100F459D9 /* main.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
