@@ -140,9 +140,9 @@ static const CGFloat kPositionLabelVerticalPaddingScale = 0.05;
 - (CGRect)progressBarRect
 {
     CGFloat barHeight = self.bounds.size.height * kBarHeightScale;
-    return CGRectMake(self.bounds.origin.x,
+    return CGRectMake(self.bounds.origin.x + self.bubbleLength / 2.0,
                       self.bounds.origin.y + self.bounds.size.height - barHeight,
-                      self.bounds.size.width,
+                      self.bounds.size.width - self.bubbleLength,
                       barHeight);
 }
 
@@ -186,10 +186,11 @@ static const CGFloat kPositionLabelVerticalPaddingScale = 0.05;
     CGContextTranslateCTM(newContext,0.0,self.frame.size.height);
     CGContextScaleCTM(newContext, 1.0, -1.0);
     
+    CGFloat barPadding = self.bubbleLength / 2.0;
     
     //Draw mask
     CGFloat lineWidth = self.bounds.size.height * kBarHeightScale; // I know I know, line width is related to context height. It's confusing.
-    CGFloat linePadX = lineWidth / 2.0; // Room for the endcaps.
+    CGFloat linePadX = lineWidth / 2.0 + barPadding; // Room for the endcaps + padding for bubble room when at edges.
     CGContextSetLineWidth(newContext, lineWidth);
     
     CGFloat barY = self.bounds.origin.y + self.bounds.size.height - lineWidth * 0.5; // pin to bottom of view
@@ -241,7 +242,7 @@ static const CGFloat kPositionLabelVerticalPaddingScale = 0.05;
     if (bubbleLineLength <= 0) NSLog(@"WARNING! BUBBLE LENGHT SHOULD BE GREATER");
     bubbleLineLength = MAX(0, bubbleLineLength); // make sure it's at least zero: with endcaps it will be a circle.
     CGFloat bubbleY = self.bounds.origin.y + bubbleLineWidth / 2.0;
-    CGFloat bubbleCenterX = self.bounds.origin.x + self.bounds.size.width * self.position;
+    CGFloat bubbleCenterX = (self.bounds.origin.x + barPadding) + self.progressBarRect.size.width * self.position;
     CGFloat bubbleLineStartX = bubbleCenterX - bubbleLineLength / 2.0;
     CGFloat bubbleLineEndX = bubbleCenterX + bubbleLineLength / 2.0;
     
@@ -269,7 +270,7 @@ static const CGFloat kPositionLabelVerticalPaddingScale = 0.05;
 {
     CGPoint locationInView = [touch locationInView:self];
     if (CGRectContainsPoint(self.progressBarRect, locationInView)) {
-        self.position = (locationInView.x - self.bounds.origin.x) / self.bounds.size.width;
+        [self setPositionWithLocationInViewX:locationInView.x];
         [self sendActionsForControlEvents:UIControlEventValueChanged];
         return YES;
     } else {
@@ -280,11 +281,15 @@ static const CGFloat kPositionLabelVerticalPaddingScale = 0.05;
 - (BOOL)continueTrackingWithTouch:(UITouch *)touch withEvent:(UIEvent *)event
 {
     CGPoint locationInView = [touch locationInView:self];
-    self.position = (locationInView.x - self.bounds.origin.x) / self.bounds.size.width;
+    [self setPositionWithLocationInViewX:locationInView.x];
     [self sendActionsForControlEvents:UIControlEventValueChanged];
     return YES;
 }
 
+- (void)setPositionWithLocationInViewX:(CGFloat)x
+{
+    self.position = (x - self.bounds.origin.x - self.bubbleLength / 2.0) / self.progressBarRect.size.width;
+}
 
 
 @end
