@@ -15,7 +15,7 @@
 @property (nonatomic, strong) UIColor *positionBarColor;
 
 @property (nonatomic) CGFloat bubbleLength;
-@property (nonatomic, strong) UIFont *bubbleFont;
+@property (readonly, weak) UILabel *bubbleLabel;
 
 @property (nonatomic) CGFloat maxPosition;
 @property (nonatomic) CGFloat position;

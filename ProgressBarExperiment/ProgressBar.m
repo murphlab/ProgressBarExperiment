@@ -12,7 +12,6 @@
 #define DEFAULT_MAX_POSITION_BAR_COLOR colorWithWhite:1.0 alpha:0.5
 #define DEFAULT_POSITION_BAR_COLOR colorWithWhite:1.0 alpha:1.0
 #define DEFAULT_BUBBLE_LENGTH 60.0
-#define DEFAULT_BUBBLE_FONT [UIFont systemFontOfSize:15.0]
 
 // IMPORTANT! All of these scale values must add up to 1.0 (permitting any minor floating point issues)
 static const CGFloat kBarHeightScale = 0.45;
@@ -30,7 +29,7 @@ static const CGFloat kPositionLabelVerticalPaddingScale = 0.05;
 @synthesize maxPositionBarColor = _maxPositionBarColor;
 @synthesize positionBarColor = _positionBarColor;
 @synthesize bubbleLength = _bubbleLength;
-@synthesize bubbleFont = _bubbleFont;
+@synthesize bubbleLabel = _bubbleLabel;
 
 - (void)setBackgroundBarColor:(UIColor *)backgroundBarColor
 {
@@ -97,22 +96,6 @@ static const CGFloat kPositionLabelVerticalPaddingScale = 0.05;
     return _bubbleLength;
 }
 
-- (void)setBubbleFont:(UIFont *)bubbleFont
-{
-    if (![_bubbleFont isEqual:bubbleFont]) {
-        _bubbleFont = bubbleFont;
-        [self setNeedsDisplay];
-    }
-}
-
-- (UIFont *)bubbleFont
-{
-    if (!_bubbleFont) {
-        _bubbleFont = DEFAULT_BUBBLE_FONT;
-    }
-    return _bubbleFont;
-}
-
 // TODO: HOW TO HANDLE POLICING RELATIVE MAXPOSTION/POSITION VALUES?
 // Can prevent position from being set greater than maxPosition.
 // But what if maxPosition is changed to a value lower than current position?
@@ -142,6 +125,19 @@ static const CGFloat kPositionLabelVerticalPaddingScale = 0.05;
                       self.bounds.origin.y + self.bounds.size.height - barHeight,
                       self.bounds.size.width,
                       barHeight);
+}
+
+- (UILabel *)bubbleLabel
+{
+    if (!_bubbleLabel) {
+        UILabel *bubbleLabel = [[UILabel alloc] initWithFrame:CGRectZero];
+        _bubbleLabel = bubbleLabel;
+        _bubbleLabel.textAlignment = NSTextAlignmentCenter;
+        [self addSubview:_bubbleLabel];
+        return _bubbleLabel;
+    } else {
+        return _bubbleLabel;
+    }
 }
 
 - (void)drawRect:(CGRect)rect {
@@ -239,6 +235,14 @@ static const CGFloat kPositionLabelVerticalPaddingScale = 0.05;
     
     CGImageRelease(mask);
     CGContextRestoreGState(context);
+    
+    [self updateBubbleLabelWithWidth:self.bubbleLength height:bubbleLineWidth * 0.8 center:CGPointMake(bubbleCenterX, bubbleY)];
+}
+
+- (void)updateBubbleLabelWithWidth:(CGFloat)width height:(CGFloat)height center:(CGPoint)center
+{
+    self.bubbleLabel.frame = CGRectMake(0, 0, width, height);
+    self.bubbleLabel.center = center;
 }
 
 
