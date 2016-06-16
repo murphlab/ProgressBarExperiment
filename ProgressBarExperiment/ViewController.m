@@ -25,7 +25,8 @@ static const int numDays = 29;
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    self.progressBar.maxPosition = 15.0 / numDays;
+    self.progressBar.maxPosition = 21.0 / numDays;
+    self.progressBar.position = 15.0 / numDays;
     [self updateBubbleLabel];
     [self updateSteppersFromProgressBar];
 }
