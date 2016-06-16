@@ -9,6 +9,8 @@
 #import "ViewController.h"
 #import "ProgressBar.h"
 
+static const int numDays = 29;
+
 @interface ViewController ()
 
 @property (weak, nonatomic) IBOutlet ProgressBar *progressBar;
@@ -19,14 +21,13 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    self.progressBar.bubbleLabel.text = @"Foo";
-
 }
 
 - (void)viewDidAppear:(BOOL)animated
 {
-    self.progressBar.maxPosition = 0.66;
+    self.progressBar.maxPosition = 1.0;
     self.progressBar.position = 0.33;
+    [self updateBubbleLabel];
 }
 
 - (void)didReceiveMemoryWarning {
@@ -35,6 +36,14 @@
 }
 - (IBAction)progressSliderChanged:(id)sender {
     NSLog(@"POSITION: %g", self.progressBar.position);
+    [self updateBubbleLabel];
+}
+
+- (void)updateBubbleLabel
+{
+    int day = numDays * self.progressBar.position;
+    self.progressBar.bubbleLabel.text = [NSString stringWithFormat:@"Day %d", day];
+    NSLog(@"LABEL: %@", self.progressBar.bubbleLabel.text);
 }
 
 @end
