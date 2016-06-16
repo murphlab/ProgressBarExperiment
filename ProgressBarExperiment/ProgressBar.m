@@ -243,15 +243,21 @@ static const CGFloat kPositionLabelVerticalPaddingScale = 0.05;
 
 - (BOOL)beginTrackingWithTouch:(UITouch *)touch withEvent:(UIEvent *)event
 {
-    CGPoint locationInView = [touch locationInView:self];
-    NSLog(@"beginTracking: %g %g", locationInView.x, locationInView.y);
-    return YES;
+    return [self updatePositionWithTouch:touch];
 }
 
 - (BOOL)continueTrackingWithTouch:(UITouch *)touch withEvent:(UIEvent *)event
 {
+    return [self updatePositionWithTouch:touch];
+}
+
+
+
+- (BOOL)updatePositionWithTouch:(UITouch *)touch
+{
     CGPoint locationInView = [touch locationInView:self];
-    NSLog(@"continueTracking: %g %g", locationInView.x, locationInView.y);
+    NSLog(@"updatePosition: %g %g", locationInView.x, locationInView.y);
+    self.position = (locationInView.x - self.bounds.origin.x) / self.bounds.size.width;
     return YES;
 }
 
