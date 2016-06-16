@@ -33,6 +33,13 @@ static const CGFloat kPositionLabelVerticalPaddingScale = 0.05;
 @synthesize bubbleLength = _bubbleLength;
 @synthesize bubbleLabel = _bubbleLabel;
 
+// Handle rotation or other geometry change:
+- (void)layoutSubviews
+{
+    [super layoutSubviews];
+    [self setNeedsDisplay];
+}
+
 - (void)setBackgroundBarColor:(UIColor *)backgroundBarColor
 {
     if (![_backgroundBarColor isEqual:backgroundBarColor]) {
