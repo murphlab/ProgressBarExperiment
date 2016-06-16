@@ -103,6 +103,14 @@
     return _bubbleFont;
 }
 
+- (void)setMaxPosition:(CGFloat)maxPosition
+{
+    if (_maxPosition != maxPosition) {
+        _maxPosition = maxPosition;
+        [self setNeedsDisplay];
+    }
+}
+
 - (void)setPosition:(CGFloat)position
 {
     if (_position != position) {
