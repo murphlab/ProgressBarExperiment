@@ -11,6 +11,7 @@
 #define DEFAULT_BACKGROUND_BAR_COLOR colorWithWhite:1.0 alpha:0.25
 #define DEFAULT_MAX_POSITION_BAR_COLOR colorWithWhite:1.0 alpha:0.5
 #define DEFAULT_POSITION_BAR_COLOR colorWithWhite:1.0 alpha:1.0
+#define DEFAULT_POINTER_COLOR DEFAULT_POSITION_BAR_COLOR
 #define DEFAULT_BUBBLE_LENGTH 60.0
 
 // IMPORTANT! All of these scale values must add up to 1.0 (permitting any minor floating point issues)
@@ -28,6 +29,7 @@ static const CGFloat kPositionLabelVerticalPaddingScale = 0.05;
 @synthesize backgroundBarColor = _backgroundBarColor;
 @synthesize maxPositionBarColor = _maxPositionBarColor;
 @synthesize positionBarColor = _positionBarColor;
+@synthesize pointerColor = _pointerColor;
 @synthesize bubbleLength = _bubbleLength;
 @synthesize bubbleLabel = _bubbleLabel;
 
@@ -86,6 +88,22 @@ static const CGFloat kPositionLabelVerticalPaddingScale = 0.05;
         [self setNeedsDisplay];
     }
         
+}
+
+- (void)setPointerColor:(UIColor *)pointerColor
+{
+    if (![_pointerColor isEqual:pointerColor]) {
+        _pointerColor = pointerColor;
+        [self setNeedsDisplay];
+    }
+}
+
+- (UIColor *)pointerColor
+{
+    if (!_pointerColor) {
+        _pointerColor = [UIColor DEFAULT_POINTER_COLOR];
+    }
+    return _pointerColor;
 }
 
 - (CGFloat)bubbleLength
@@ -230,7 +248,7 @@ static const CGFloat kPositionLabelVerticalPaddingScale = 0.05;
     CGContextSetLineWidth(context, bubbleLineWidth);
     CGContextMoveToPoint(context, bubbleLineStartX, bubbleY);
     CGContextAddLineToPoint(context, bubbleLineEndX, bubbleY);
-    CGContextSetStrokeColorWithColor(context, [[UIColor redColor] CGColor]);
+    CGContextSetStrokeColorWithColor(context, [self.pointerColor CGColor]);
     CGContextSetLineCap(context, kCGLineCapRound);
     CGContextStrokePath(context);
     
