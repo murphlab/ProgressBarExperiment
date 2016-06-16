@@ -103,6 +103,11 @@
     return _bubbleFont;
 }
 
+// TODO: HOW TO HANDLE POLICING RELATIVE MAXPOSTION/POSITION VALUES?
+// Can prevent position from being set greater than maxPosition.
+// But what if maxPosition is changed to a value lower than current position?
+// Adjust position? Would we then send out an action that the position value has changed?
+
 - (void)setMaxPosition:(CGFloat)maxPosition
 {
     if (_maxPosition != maxPosition) {
