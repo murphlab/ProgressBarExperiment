@@ -33,5 +33,8 @@
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
+- (IBAction)progressSliderChanged:(id)sender {
+    NSLog(@"POSITION: %g", self.progressBar.position);
+}
 
 @end

@@ -251,6 +251,7 @@ static const CGFloat kPositionLabelVerticalPaddingScale = 0.05;
     CGPoint locationInView = [touch locationInView:self];
     if (CGRectContainsPoint(self.progressBarRect, locationInView)) {
         self.position = (locationInView.x - self.bounds.origin.x) / self.bounds.size.width;
+        [self sendActionsForControlEvents:UIControlEventValueChanged];
         return YES;
     } else {
         return NO;
@@ -261,6 +262,7 @@ static const CGFloat kPositionLabelVerticalPaddingScale = 0.05;
 {
     CGPoint locationInView = [touch locationInView:self];
     self.position = (locationInView.x - self.bounds.origin.x) / self.bounds.size.width;
+    [self sendActionsForControlEvents:UIControlEventValueChanged];
     return YES;
 }
 
