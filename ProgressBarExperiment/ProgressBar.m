@@ -75,19 +75,9 @@
 }
 
 - (void)drawRect:(CGRect)rect {
-    /*
-    CGContextRef context = UIGraphicsGetCurrentContext();
-    CGContextSetLineWidth(context, 20.0);
-    CGFloat middleY = self.bounds.origin.y + self.bounds.size.height / 2.0;
-    static CGFloat linePadX = 20.0;
-    CGFloat lineStartX = self.bounds.origin.x + linePadX;
-    CGFloat lineEndX = self.bounds.origin.x + self.bounds.size.width - linePadX;
-    CGContextMoveToPoint(context, lineStartX, middleY);
-    CGContextAddLineToPoint(context, lineEndX, middleY);
-    CGContextSetStrokeColorWithColor(context, [[UIColor blueColor] CGColor]);
-    CGContextSetLineCap(context, kCGLineCapRound);
-    CGContextStrokePath(context);
-     */
+
+
+    
     CGContextRef context = UIGraphicsGetCurrentContext();
     [self drawProgressBar:context];
 
@@ -96,8 +86,17 @@
 
 -(void)drawProgressBar:(CGContextRef)context{
     
+    // Calculate:
+    // bar height based on view heigt. Same height for bar and bubble portion of position label.
+    // Tick portion of position label and position label padding are percentage of height.
+    // Some starting values:
+    static CGFloat barHeightScale = 0.45;
+    static CGFloat positionLabelBubbleHeightScale = 0.45;
+    static CGFloat positionLabelTickHeightScale = 0.05;
+    static CGFloat positionLabelPaddingScale = 0.05;
+    
     CGContextSaveGState(context);
-        UIGraphicsBeginImageContextWithOptions((self.frame.size), NO, 0.0);
+    UIGraphicsBeginImageContextWithOptions((self.frame.size), NO, 0.0);
     
     CGContextRef newContext = UIGraphicsGetCurrentContext();
     
@@ -107,14 +106,15 @@
     
     
     //Draw mask
-    CGFloat lineWidth = 20.0;
-    CGFloat linePadX = lineWidth / 2.0;
+    CGFloat lineWidth = self.bounds.size.height * barHeightScale; // I know I know, line width is related to context height. It's confusing.
+    CGFloat linePadX = lineWidth / 2.0; // Room for the endcaps.
     CGContextSetLineWidth(newContext, lineWidth);
-    CGFloat middleY = self.bounds.origin.y + self.bounds.size.height / 2.0;
+    
+    CGFloat barY = self.bounds.origin.y + self.bounds.size.height - lineWidth * 0.5; // pin to bottom of view
     CGFloat lineStartX = self.bounds.origin.x + linePadX;
     CGFloat lineEndX = self.bounds.origin.x + self.bounds.size.width - linePadX;
-    CGContextMoveToPoint(newContext, lineStartX, middleY);
-    CGContextAddLineToPoint(newContext, lineEndX, middleY);
+    CGContextMoveToPoint(newContext, lineStartX, barY);
+    CGContextAddLineToPoint(newContext, lineEndX, barY);
     CGContextSetStrokeColorWithColor(newContext, [[UIColor blackColor] CGColor]);
     CGContextSetLineCap(newContext, kCGLineCapRound);
     CGContextStrokePath(newContext);
