@@ -128,6 +128,7 @@ static const CGFloat kPositionLabelVerticalPaddingScale = 0.05;
 
 - (void)setPosition:(CGFloat)position
 {
+    position = MIN(self.maxPosition, position);
     if (_position != position) {
         _position = position;
         [self setNeedsDisplay];
