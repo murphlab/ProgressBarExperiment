@@ -14,6 +14,16 @@
 #define DEFAULT_BUBBLE_LENGTH 60.0
 #define DEFAULT_BUBBLE_FONT [UIFont systemFontOfSize:15.0]
 
+// IMPORTANT! All of these scale values must add up to 1.0 (permitting any minor floating point issues)
+static const CGFloat kBarHeightScale = 0.45;
+static const CGFloat kPositionLabelBubbleHeightScale = 0.45;
+static const CGFloat kPositionLabelTickHeightScale = 0.05;
+static const CGFloat kPositionLabelVerticalPaddingScale = 0.05;
+
+@interface ProgressBar ()
+@property (nonatomic, readonly) CGRect progressBarRect;
+@end
+
 @implementation ProgressBar
 
 @synthesize backgroundBarColor = _backgroundBarColor;
@@ -124,6 +134,15 @@
     }
 }
 
+- (CGRect)progressBarRect
+{
+    CGFloat barHeight = self.bounds.size.height * kBarHeightScale;
+    return CGRectMake(self.bounds.origin.x,
+                      self.bounds.origin.y + self.bounds.size.height - barHeight,
+                      self.bounds.size.width,
+                      barHeight);
+}
+
 - (void)drawRect:(CGRect)rect {
 
 
@@ -140,10 +159,7 @@
     // bar height based on view heigt. Same height for bar and bubble portion of position label.
     // Tick portion of position label and position label padding are percentage of height.
     // Some starting values:
-    static CGFloat barHeightScale = 0.45;
-    static CGFloat positionLabelBubbleHeightScale = 0.45;
-    static CGFloat positionLabelTickHeightScale = 0.05;
-    static CGFloat positionLabelVerticalPaddingScale = 0.05;
+
     
     CGContextSaveGState(context);
     UIGraphicsBeginImageContextWithOptions((self.frame.size), NO, 0.0);
@@ -154,9 +170,9 @@
     CGContextTranslateCTM(newContext,0.0,self.frame.size.height);
     CGContextScaleCTM(newContext, 1.0, -1.0);
     
-    /*
+    
     //Draw mask
-    CGFloat lineWidth = self.bounds.size.height * barHeightScale; // I know I know, line width is related to context height. It's confusing.
+    CGFloat lineWidth = self.bounds.size.height * kBarHeightScale; // I know I know, line width is related to context height. It's confusing.
     CGFloat linePadX = lineWidth / 2.0; // Room for the endcaps.
     CGContextSetLineWidth(newContext, lineWidth);
     
@@ -168,35 +184,43 @@
     CGContextSetStrokeColorWithColor(newContext, [[UIColor blackColor] CGColor]);
     CGContextSetLineCap(newContext, kCGLineCapRound);
     CGContextStrokePath(newContext);
+    CGFloat verticalPadding = self.bounds.size.height * kPositionLabelVerticalPaddingScale;
+    // Upper mask allows visiblility of position bubble+tick:
+    CGFloat upperMaskRectHeight = self.bounds.size.height - self.progressBarRect.size.height - verticalPadding;
+    CGRect upperMaskRect = CGRectMake(self.bounds.origin.x,
+                                      self.bounds.origin.y,
+                                      self.bounds.size.width,
+                                      upperMaskRectHeight);
+    CGContextFillRect(newContext, upperMaskRect);
     CGImageRef mask = CGBitmapContextCreateImage(UIGraphicsGetCurrentContext());
     UIGraphicsEndImageContext();
     CGContextClipToMask(context, self.bounds, mask);
-    */
+    
     // draw backgroundBar:
     
     CGContextSetFillColorWithColor(context, [self.backgroundBarColor CGColor]);
-    CGContextFillRect(context, self.bounds);
+    CGContextFillRect(context, self.progressBarRect);
     
     // draw maxPositionBar:
     
-    CGRect maxPositionRect = CGRectMake(self.bounds.origin.x,
-                                        self.bounds.origin.y,
-                                        self.bounds.size.width * self.maxPosition,
-                                        self.bounds.size.height);
+    CGRect maxPositionRect = CGRectMake(self.progressBarRect.origin.x,
+                                        self.progressBarRect.origin.y,
+                                        self.progressBarRect.size.width * self.maxPosition,
+                                        self.progressBarRect.size.height);
     CGContextSetFillColorWithColor(context, [self.maxPositionBarColor CGColor]);
     CGContextFillRect(context, maxPositionRect);
     
     // draw positionBar:
     
-    CGRect positionRect = CGRectMake(self.bounds.origin.x,
-                                     self.bounds.origin.y,
-                                     self.bounds.size.width * self.position,
-                                     self.bounds.size.height);
+    CGRect positionRect = CGRectMake(self.progressBarRect.origin.x,
+                                     self.progressBarRect.origin.y,
+                                     self.progressBarRect.size.width * self.position,
+                                     self.progressBarRect.size.height);
     CGContextSetFillColorWithColor(context, [self.positionBarColor CGColor]);
     CGContextFillRect(context, positionRect);
     
     // draw bubble:
-    CGFloat bubbleLineWidth = self.bounds.size.height * positionLabelBubbleHeightScale;
+    CGFloat bubbleLineWidth = self.bounds.size.height * kPositionLabelBubbleHeightScale;
     CGFloat bubbleLineLength = self.bubbleLength - bubbleLineWidth; // subtracting the length added by endcaps, which combined = bubbleLineWidth
     if (bubbleLineLength <= 0) NSLog(@"WARNING! BUBBLE LENGHT SHOULD BE GREATER");
     bubbleLineLength = MAX(0, bubbleLineLength); // make sure it's at least zero: with endcaps it will be a circle.
@@ -212,7 +236,7 @@
     CGContextSetLineCap(context, kCGLineCapRound);
     CGContextStrokePath(context);
     
-    ////////CGImageRelease(mask);
+    CGImageRelease(mask);
     CGContextRestoreGState(context);
 }
 
