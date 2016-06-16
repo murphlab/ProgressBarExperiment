@@ -11,7 +11,7 @@
 #define DEFAULT_BACKGROUND_BAR_COLOR colorWithWhite:1.0 alpha:0.25
 #define DEFAULT_MAX_POSITION_BAR_COLOR colorWithWhite:1.0 alpha:0.5
 #define DEFAULT_POSITION_BAR_COLOR colorWithWhite:1.0 alpha:1.0
-#define DEFAULT_BUBBLE_WIDTH 30.0
+#define DEFAULT_BUBBLE_LENGTH 60.0
 #define DEFAULT_BUBBLE_FONT [UIFont systemFontOfSize:15.0]
 
 @implementation ProgressBar
@@ -19,7 +19,7 @@
 @synthesize backgroundBarColor = _backgroundBarColor;
 @synthesize maxPositionBarColor = _maxPositionBarColor;
 @synthesize positionBarColor = _positionBarColor;
-@synthesize bubbleWidth = _bubbleWidth;
+@synthesize bubbleLength = _bubbleLength;
 @synthesize bubbleFont = _bubbleFont;
 
 - (void)setBackgroundBarColor:(UIColor *)backgroundBarColor
@@ -70,21 +70,21 @@
     return _positionBarColor;
 }
 
-- (void)setBubbleWidth:(CGFloat)bubbleWidth
+- (void)setBubbleLength:(CGFloat)bubbleLength
 {
-    if (_bubbleWidth != bubbleWidth) {
-        _bubbleWidth = bubbleWidth;
+    if (_bubbleLength != bubbleLength) {
+        _bubbleLength = bubbleLength;
         [self setNeedsDisplay];
     }
         
 }
 
-- (CGFloat)bubbleWidth
+- (CGFloat)bubbleLength
 {
-    if (_bubbleWidth == 0.0) { // _bubbleWidth == 0 = unset so use default
-        _bubbleWidth = DEFAULT_BUBBLE_WIDTH;
+    if (_bubbleLength == 0.0) { // _bubbleLength == 0 = unset so use default
+        _bubbleLength = DEFAULT_BUBBLE_LENGTH;
     }
-    return _bubbleWidth;
+    return _bubbleLength;
 }
 
 - (void)setBubbleFont:(UIFont *)bubbleFont
@@ -154,7 +154,7 @@
     CGContextTranslateCTM(newContext,0.0,self.frame.size.height);
     CGContextScaleCTM(newContext, 1.0, -1.0);
     
-    
+    /*
     //Draw mask
     CGFloat lineWidth = self.bounds.size.height * barHeightScale; // I know I know, line width is related to context height. It's confusing.
     CGFloat linePadX = lineWidth / 2.0; // Room for the endcaps.
@@ -171,7 +171,7 @@
     CGImageRef mask = CGBitmapContextCreateImage(UIGraphicsGetCurrentContext());
     UIGraphicsEndImageContext();
     CGContextClipToMask(context, self.bounds, mask);
-    
+    */
     // draw backgroundBar:
     
     CGContextSetFillColorWithColor(context, [self.backgroundBarColor CGColor]);
@@ -195,7 +195,24 @@
     CGContextSetFillColorWithColor(context, [self.positionBarColor CGColor]);
     CGContextFillRect(context, positionRect);
     
-    CGImageRelease(mask);
+    // draw bubble:
+    CGFloat bubbleLineWidth = self.bounds.size.height * positionLabelBubbleHeightScale;
+    CGFloat bubbleLineLength = self.bubbleLength - bubbleLineWidth; // subtracting the length added by endcaps, which combined = bubbleLineWidth
+    if (bubbleLineLength <= 0) NSLog(@"WARNING! BUBBLE LENGHT SHOULD BE GREATER");
+    bubbleLineLength = MAX(0, bubbleLineLength); // make sure it's at least zero: with endcaps it will be a circle.
+    CGFloat bubbleY = self.bounds.origin.y + bubbleLineWidth / 2.0;
+    CGFloat bubbleCenterX = self.bounds.origin.x + self.bounds.size.width * self.position;
+    CGFloat bubbleLineStartX = bubbleCenterX - bubbleLineLength / 2.0;
+    CGFloat bubbleLineEndX = bubbleCenterX + bubbleLineLength / 2.0;
+    
+    CGContextSetLineWidth(context, bubbleLineWidth);
+    CGContextMoveToPoint(context, bubbleLineStartX, bubbleY);
+    CGContextAddLineToPoint(context, bubbleLineEndX, bubbleY);
+    CGContextSetStrokeColorWithColor(context, [[UIColor redColor] CGColor]);
+    CGContextSetLineCap(context, kCGLineCapRound);
+    CGContextStrokePath(context);
+    
+    ////////CGImageRelease(mask);
     CGContextRestoreGState(context);
 }
 
