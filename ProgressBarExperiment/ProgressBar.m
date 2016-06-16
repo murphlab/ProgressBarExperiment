@@ -93,7 +93,7 @@
     static CGFloat barHeightScale = 0.45;
     static CGFloat positionLabelBubbleHeightScale = 0.45;
     static CGFloat positionLabelTickHeightScale = 0.05;
-    static CGFloat positionLabelPaddingScale = 0.05;
+    static CGFloat positionLabelVerticalPaddingScale = 0.05;
     
     CGContextSaveGState(context);
     UIGraphicsBeginImageContextWithOptions((self.frame.size), NO, 0.0);
