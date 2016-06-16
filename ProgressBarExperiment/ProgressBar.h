@@ -14,6 +14,9 @@
 @property (nonatomic, strong) UIColor *maxPositionBarColor;
 @property (nonatomic, strong) UIColor *positionBarColor;
 
+@property (nonatomic) CGFloat bubbleWidth;
+@property (nonatomic, strong) UIFont *bubbleFont;
+
 @property (nonatomic) CGFloat maxPosition;
 @property (nonatomic) CGFloat position;
 

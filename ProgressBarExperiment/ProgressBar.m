@@ -11,12 +11,16 @@
 #define DEFAULT_BACKGROUND_BAR_COLOR colorWithWhite:1.0 alpha:0.25
 #define DEFAULT_MAX_POSITION_BAR_COLOR colorWithWhite:1.0 alpha:0.5
 #define DEFAULT_POSITION_BAR_COLOR colorWithWhite:1.0 alpha:1.0
+#define DEFAULT_BUBBLE_WIDTH 30.0
+#define DEFAULT_BUBBLE_FONT [UIFont systemFontOfSize:15.0]
 
 @implementation ProgressBar
 
 @synthesize backgroundBarColor = _backgroundBarColor;
 @synthesize maxPositionBarColor = _maxPositionBarColor;
 @synthesize positionBarColor = _positionBarColor;
+@synthesize bubbleWidth = _bubbleWidth;
+@synthesize bubbleFont = _bubbleFont;
 
 - (void)setBackgroundBarColor:(UIColor *)backgroundBarColor
 {
@@ -64,6 +68,39 @@
         _positionBarColor = [UIColor DEFAULT_POSITION_BAR_COLOR];
     }
     return _positionBarColor;
+}
+
+- (void)setBubbleWidth:(CGFloat)bubbleWidth
+{
+    if (_bubbleWidth != bubbleWidth) {
+        _bubbleWidth = bubbleWidth;
+        [self setNeedsDisplay];
+    }
+        
+}
+
+- (CGFloat)bubbleWidth
+{
+    if (_bubbleWidth == 0.0) { // _bubbleWidth == 0 = unset so use default
+        _bubbleWidth = DEFAULT_BUBBLE_WIDTH;
+    }
+    return _bubbleWidth;
+}
+
+- (void)setBubbleFont:(UIFont *)bubbleFont
+{
+    if (![_bubbleFont isEqual:bubbleFont]) {
+        _bubbleFont = bubbleFont;
+        [self setNeedsDisplay];
+    }
+}
+
+- (UIFont *)bubbleFont
+{
+    if (!_bubbleFont) {
+        _bubbleFont = DEFAULT_BUBBLE_FONT;
+    }
+    return _bubbleFont;
 }
 
 - (void)setPosition:(CGFloat)position
