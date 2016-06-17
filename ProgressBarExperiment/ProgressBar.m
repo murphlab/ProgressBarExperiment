@@ -14,11 +14,11 @@
 #define DEFAULT_POINTER_COLOR DEFAULT_POSITION_BAR_COLOR
 #define DEFAULT_BUBBLE_LENGTH 56.0
 
-// IMPORTANT! All of these scale values must add up to 1.0 (permitting any minor floating point issues)
 static const CGFloat kBarHeightScale = 0.42;
 static const CGFloat kPositionLabelBubbleHeightScale = 0.42;
-static const CGFloat kPositionLabelTickHeightScale = 0.12;
-static const CGFloat kPositionLabelVerticalPaddingScale = 0.04;
+static const CGFloat kPositionLabelTickHeightScale = 0.11;
+static const CGFloat kTickffsetXFactor = 0.8; // (ratio of 1 side of triangle to height) / 2 [for equilateral triangle: 0.577]
+
 
 @interface ProgressBar ()
 @property (nonatomic, readonly) CGRect progressBarRect;
@@ -199,6 +199,7 @@ static const CGFloat kPositionLabelVerticalPaddingScale = 0.04;
     CGFloat lineWidth = self.bounds.size.height * kBarHeightScale; // I know I know, line width is related to context height. It's confusing.
     CGFloat linePadX = lineWidth / 2.0 + barPadding; // Room for the endcaps + padding for bubble room when at edges.
     CGContextSetLineWidth(newContext, lineWidth);
+
     
     CGFloat barY = self.bounds.origin.y + self.bounds.size.height - lineWidth * 0.5; // pin to bottom of view
     CGFloat lineStartX = self.bounds.origin.x + linePadX;
@@ -208,9 +209,13 @@ static const CGFloat kPositionLabelVerticalPaddingScale = 0.04;
     CGContextSetStrokeColorWithColor(newContext, [[UIColor blackColor] CGColor]);
     CGContextSetLineCap(newContext, kCGLineCapRound);
     CGContextStrokePath(newContext);
-    CGFloat verticalPadding = self.bounds.size.height * kPositionLabelVerticalPaddingScale;
+    
+    // Need to calculate these early to calculate upperMaskHeight:
+    CGFloat bubbleLineWidth = self.bounds.size.height * kPositionLabelBubbleHeightScale;
+    CGFloat tickHeight = kPositionLabelTickHeightScale * self.bounds.size.height;
+    CGFloat upperMaskRectHeight = bubbleLineWidth + tickHeight;
+    
     // Upper mask allows visiblility of position bubble+tick:
-    CGFloat upperMaskRectHeight = self.bounds.size.height - self.progressBarRect.size.height - verticalPadding;
     CGRect upperMaskRect = CGRectMake(self.bounds.origin.x,
                                       self.bounds.origin.y,
                                       self.bounds.size.width,
@@ -244,7 +249,6 @@ static const CGFloat kPositionLabelVerticalPaddingScale = 0.04;
     CGContextFillRect(context, positionRect);
     
     // draw bubble:
-    CGFloat bubbleLineWidth = self.bounds.size.height * kPositionLabelBubbleHeightScale;
     CGFloat bubbleLineLength = self.bubbleLength - bubbleLineWidth; // subtracting the length added by endcaps, which combined = bubbleLineWidth
     if (bubbleLineLength <= 0) NSLog(@"WARNING! BUBBLE LENGHT SHOULD BE GREATER");
     bubbleLineLength = MAX(0, bubbleLineLength); // make sure it's at least zero: with endcaps it will be a circle.
@@ -261,9 +265,7 @@ static const CGFloat kPositionLabelVerticalPaddingScale = 0.04;
     CGContextStrokePath(context);
 
     // draw tick
-    static CGFloat offsetXFactor = 0.7; // (ratio of 1 side of triangle to height) / 2 (for equilateral triangle: 0.577
-    CGFloat tickHeight = kPositionLabelTickHeightScale * self.bounds.size.height;
-    CGFloat offsetX = offsetXFactor * tickHeight;
+    CGFloat offsetX = kTickffsetXFactor * tickHeight;
     CGFloat tickTopY = bubbleY + bubbleLineWidth / 2.0;
     CGPoint tickVertexA = CGPointMake(bubbleCenterX - offsetX, tickTopY);
     CGPoint tickVertexB = CGPointMake(bubbleCenterX + offsetX, tickTopY);
