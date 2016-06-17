@@ -34,7 +34,7 @@ static const int numDays = 29;
 }
 
 - (IBAction)progressSliderChanged:(id)sender {
-    NSLog(@"POSITION: %g", self.progressBar.position);
+    //NSLog(@"POSITION: %g", self.progressBar.position);
     [self updateBubbleLabel];
     [self updateSteppersFromProgressBar];
 }
@@ -43,6 +43,7 @@ static const int numDays = 29;
     [self updateStepperLabels];
     [self updateProgressBar];
     [self updateBubbleLabel];
+    [self updateSteppersFromProgressBar];
 }
 
 - (void)updateSteppersFromProgressBar
@@ -61,7 +62,7 @@ static const int numDays = 29;
 {
     int day = numDays * self.progressBar.position;
     self.progressBar.bubbleLabel.text = [NSString stringWithFormat:@"Day %d", day];
-    NSLog(@"LABEL: %@", self.progressBar.bubbleLabel.text);
+    //NSLog(@"LABEL: %@", self.progressBar.bubbleLabel.text);
 }
 
 - (void)updateProgressBar
