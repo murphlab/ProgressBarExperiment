@@ -12,7 +12,7 @@
 #define DEFAULT_MAX_POSITION_BAR_COLOR colorWithWhite:1.0 alpha:0.5
 #define DEFAULT_POSITION_BAR_COLOR colorWithWhite:1.0 alpha:1.0
 #define DEFAULT_POINTER_COLOR DEFAULT_POSITION_BAR_COLOR
-#define DEFAULT_BUBBLE_LENGTH 60.0
+#define DEFAULT_BUBBLE_LENGTH 56.0
 
 // IMPORTANT! All of these scale values must add up to 1.0 (permitting any minor floating point issues)
 static const CGFloat kBarHeightScale = 0.42;

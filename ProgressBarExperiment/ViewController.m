@@ -26,7 +26,9 @@ static const int numDays = 29;
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.progressBar.maxPosition = 21.0 / numDays;
-    self.progressBar.position = 15.0 / numDays;
+    self.progressBar.position = 15.0 / numDays;;
+    self.progressBar.bubbleLabel.font = [UIFont fontWithName:@"AvenirNext-Medium" size:12.0];
+    self.progressBar.bubbleLabel.textColor = self.view.backgroundColor;
     [self updateBubbleLabel];
     [self updateSteppersFromProgressBar];
 }
