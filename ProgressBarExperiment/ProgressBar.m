@@ -33,12 +33,7 @@ static const CGFloat kTickffsetXFactor = 0.8; // (ratio of 1 side of triangle to
 @synthesize bubbleLength = _bubbleLength;
 @synthesize bubbleLabel = _bubbleLabel;
 
-// Handle rotation or other geometry change:
-- (void)layoutSubviews
-{
-    [super layoutSubviews];
-    [self setNeedsDisplay];
-}
+#pragma mark - Getters and Setters
 
 - (void)setBackgroundBarColor:(UIColor *)backgroundBarColor
 {
@@ -166,13 +161,19 @@ static const CGFloat kTickffsetXFactor = 0.8; // (ratio of 1 side of triangle to
     }
 }
 
+#pragma mark - UIView
+
+// Handle rotation or other geometry change:
+- (void)layoutSubviews
+{
+    [super layoutSubviews];
+    [self setNeedsDisplay];
+}
+
 - (void)drawRect:(CGRect)rect {
-
-
     
     CGContextRef context = UIGraphicsGetCurrentContext();
     [self drawProgressBar:context];
-
 }
 
 
@@ -289,6 +290,7 @@ static const CGFloat kTickffsetXFactor = 0.8; // (ratio of 1 side of triangle to
     self.bubbleLabel.center = center;
 }
 
+#pragma mark - UIControl
 
 - (BOOL)beginTrackingWithTouch:(UITouch *)touch withEvent:(UIEvent *)event
 {
