@@ -266,7 +266,7 @@ static const CGFloat kTickffsetXFactor = 0.8; // (ratio of 1 side of triangle to
 
     // draw tick
     CGFloat offsetX = kTickffsetXFactor * tickHeight;
-    CGFloat tickTopY = bubbleY + bubbleLineWidth / 2.0;
+    CGFloat tickTopY = bubbleY + bubbleLineWidth / 2.0 - 1.0; // -1 to create a wee bit of overlap
     CGPoint tickVertexA = CGPointMake(bubbleCenterX - offsetX, tickTopY);
     CGPoint tickVertexB = CGPointMake(bubbleCenterX + offsetX, tickTopY);
     CGPoint tickVertexC = CGPointMake(bubbleCenterX, tickTopY + tickHeight);
