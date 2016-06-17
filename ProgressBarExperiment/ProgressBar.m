@@ -176,13 +176,7 @@ static const CGFloat kTickffsetXFactor = 0.8; // (ratio of 1 side of triangle to
 
 
 -(void)drawProgressBar:(CGContextRef)context{
-    
-    // Calculate:
-    // bar height based on view heigt. Same height for bar and bubble portion of position label.
-    // Tick portion of position label and position label padding are percentage of height.
-    // Some starting values:
 
-    
     CGContextSaveGState(context);
     UIGraphicsBeginImageContextWithOptions((self.frame.size), NO, 0.0);
     
