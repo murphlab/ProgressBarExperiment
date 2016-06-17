@@ -9,7 +9,7 @@
 #import "ViewController.h"
 #import "ProgressBar.h"
 
-static const int numDays = 29;
+static const int numDays = 28;
 
 @interface ViewController ()
 

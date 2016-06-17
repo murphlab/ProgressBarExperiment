@@ -28,7 +28,7 @@
                                     <action selector="progressSliderChanged:" destination="BYZ-38-t0r" eventType="valueChanged" id="urz-MT-vk5"/>
                                 </connections>
                             </view>
-                            <stepper opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" maximumValue="29" translatesAutoresizingMaskIntoConstraints="NO" id="OFM-3w-fou">
+                            <stepper opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" maximumValue="28" translatesAutoresizingMaskIntoConstraints="NO" id="OFM-3w-fou">
                                 <rect key="frame" x="253" y="193" width="94" height="29"/>
                                 <connections>
                                     <action selector="stepperTapped:" destination="BYZ-38-t0r" eventType="valueChanged" id="VRm-Oo-Cta"/>
@@ -44,7 +44,7 @@
                                 <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <stepper opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" maximumValue="29" translatesAutoresizingMaskIntoConstraints="NO" id="D3R-UP-DPD">
+                            <stepper opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" maximumValue="28" translatesAutoresizingMaskIntoConstraints="NO" id="D3R-UP-DPD">
                                 <rect key="frame" x="253" y="292" width="94" height="29"/>
                                 <connections>
                                     <action selector="stepperTapped:" destination="BYZ-38-t0r" eventType="valueChanged" id="8rw-Fa-mE2"/>
