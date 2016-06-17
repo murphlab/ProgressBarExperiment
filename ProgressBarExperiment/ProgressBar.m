@@ -116,21 +116,19 @@ static const CGFloat kTickffsetXFactor = 0.8; // (ratio of 1 side of triangle to
     return _bubbleLength;
 }
 
-// TODO: HOW TO HANDLE POLICING RELATIVE MAXPOSTION/POSITION VALUES?
-// Can prevent position from being set greater than maxPosition.
-// But what if maxPosition is changed to a value lower than current position?
-// Adjust position? Would we then send out an action that the position value has changed?
-
 - (void)setMaxPosition:(CGFloat)maxPosition
 {
     if (_maxPosition != maxPosition) {
         _maxPosition = maxPosition;
+        // If maxPosition is set below position, adjust position:
+        if (self.position > maxPosition) self.position = maxPosition;
         [self setNeedsDisplay];
     }
 }
 
 - (void)setPosition:(CGFloat)position
 {
+    // Clamp position between 0 and maxPosition
     position = MIN(self.maxPosition, position);
     position = MAX(0.0, position);
     if (_position != position) {
@@ -196,13 +194,12 @@ static const CGFloat kTickffsetXFactor = 0.8; // (ratio of 1 side of triangle to
     
     CGFloat barPadding = self.bubbleLength / 2.0;
     
-    //Draw mask
-    CGFloat lineWidth = self.bounds.size.height * kBarHeightScale; // I know I know, line width is related to context height. It's confusing.
+    //Draw mask in the shape of bar with round endcaps. Background color, maxPosition, and position rectangles will be drawn "behind" mask:
+    CGFloat lineWidth = self.bounds.size.height * kBarHeightScale; // I know I know, line width is a function of height. It's confusing.
     CGFloat linePadX = lineWidth / 2.0 + barPadding; // Room for the endcaps + padding for bubble room when at edges.
     CGContextSetLineWidth(newContext, lineWidth);
-
     
-    CGFloat barY = self.bounds.origin.y + self.bounds.size.height - lineWidth * 0.5; // pin to bottom of view
+    CGFloat barY = self.bounds.origin.y + self.bounds.size.height - lineWidth * 0.5; // pin bar to bottom of view
     CGFloat lineStartX = self.bounds.origin.x + linePadX;
     CGFloat lineEndX = self.bounds.origin.x + self.bounds.size.width - linePadX;
     CGContextMoveToPoint(newContext, lineStartX, barY);
@@ -265,7 +262,7 @@ static const CGFloat kTickffsetXFactor = 0.8; // (ratio of 1 side of triangle to
     CGContextSetLineCap(context, kCGLineCapRound);
     CGContextStrokePath(context);
 
-    // draw tick
+    // draw tick:
     CGFloat offsetX = kTickffsetXFactor * tickHeight;
     CGFloat tickTopY = bubbleY + bubbleLineWidth / 2.0 - 1.0; // -1 to create a wee bit of overlap
     CGPoint tickVertexA = CGPointMake(bubbleCenterX - offsetX, tickTopY);
